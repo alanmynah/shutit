@@ -182,21 +182,27 @@ class ShutItGlobal(object):
 	                   walkthrough_wait=-1,
 	                   nocolor=False,
 	                   loglevel='WARNING'):
-		os.system("echo 'line185 shutit_global.py create_session start'")
+		os.system("echo 'line185 shutit_global.py'")
 		assert isinstance(session_type, str), shutit_util.print_debug()
+		os.system("echo 'line187 shutit_global.py'")
 		new_shutit = ShutIt(standalone=True, session_type=session_type)
+		os.system("echo 'line189 shutit_global.py'")
 		self.shutit_objects.append(new_shutit)
 		if session_type == 'bash':
+			os.system("echo 'line192 shutit_global.py session_type was bash'")
 			new_shutit.process_args(ShutItInit('build',
 			                                   delivery='bash',
 			                                   echo=echo,
 			                                   walkthrough=walkthrough,
 			                                   walkthrough_wait=walkthrough_wait,
 			                                   loglevel=loglevel))
+			os.system("echo 'line199 shutit_global.py'")
 			new_shutit.load_configs()
+			os.system("echo 'line201 shutit_global.py'")
 			new_shutit.setup_host_child_environment()
 			return new_shutit
 		elif session_type == 'docker':
+			os.system("echo 'line205 shutit_global.py session_type was docker'")
 			new_shutit.process_args(ShutItInit('build',
 			                                   delivery='docker',
 			                                   base_image=docker_image,

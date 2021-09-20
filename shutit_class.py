@@ -331,6 +331,7 @@ class ShutIt(object):
 		             If it's created dynamically, then this can make a difference to
 		             how the configuration is collected.
 		"""
+		os.system("echo 'line334 shutit_class.py'")
 
 		self.standalone                      = standalone
 		# Store the root directory of this application.
@@ -352,6 +353,8 @@ class ShutIt(object):
 		self.build['accept_defaults']        = None
 		self.build['exam']                   = False
 
+		os.system("echo 'line356 shutit_class.py'")
+
 		# Host information - move to global?
 		self.host                            = {}
 		self.host['shutit_path']             = sys.path[0]
@@ -361,6 +364,8 @@ class ShutIt(object):
 
 		# These used to be in shutit_global, so we pass them in as args so
 		# the original reference can be put in shutit_global
+		os.system("echo 'line367 shutit_class.py'")
+
 		self.repository                      = {}
 		self.expect_prompts                  = {}
 		self.list_configs                    = {}
@@ -384,12 +389,14 @@ class ShutIt(object):
 		self.shutitfile                      = {}
 		self.cfg['shutitfile']               = self.shutitfile   # required for patterns
 		self.cfg['skeleton']                 = {}                # required for patterns
+		os.system("echo 'line392 shutit_class.py'")
 
 		# Session type
 		self.session_type                    = session_type
 
 		# Unique id
 		self.uuid_str                        = str(uuid.uuid4())
+		os.system("echo 'line399 shutit_class.py'")
 
 		# Logging
 		self.loglevel                        = None
