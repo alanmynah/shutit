@@ -4126,16 +4126,22 @@ class ShutIt(object):
 
 
 	def setup_host_child_environment(self):
+		os.system("echo 'line4129 shutit_class.py'")
 		shutit_global.shutit_global_object.yield_to_draw()
 		# Now let's have a host_child
 		self.log('Spawning host child',level=logging.DEBUG)
+		os.system("echo 'line4133 shutit_class.py'")
 		shutit_pexpect_session = ShutItPexpectSession(self, 'host_child', '/bin/bash')
 		# Set up prompts and let the user do things before the build
+		os.system("echo 'line4136 shutit_class.py'")
 		self.set_default_shutit_pexpect_session(shutit_pexpect_session)
+		os.system("echo 'line4138 shutit_class.py'")
 		self.set_default_shutit_pexpect_session_expect(shutit_global.shutit_global_object.base_prompt)
 		# ORIGIN_ENV is a special case of the prompt maintained for performance reasons, don't change.
 		prefix = 'ORIGIN_ENV'
+		os.system("echo 'line4142 shutit_class.py'")
 		shutit_pexpect_session.setup_prompt('ORIGIN_ENV', prefix=prefix)
+		os.system("echo 'line4144 shutit_class.py'")
 		shutit_pexpect_session.login_stack.append(prefix)
 
 

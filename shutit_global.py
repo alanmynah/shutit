@@ -200,9 +200,10 @@ class ShutItGlobal(object):
 			new_shutit.load_configs()
 			os.system("echo 'line201 shutit_global.py'")
 			new_shutit.setup_host_child_environment()
+			os.system("echo 'line203 shutit_global.py'")
 			return new_shutit
 		elif session_type == 'docker':
-			os.system("echo 'line205 shutit_global.py session_type was docker'")
+			os.system("echo 'line206 shutit_global.py session_type was docker'")
 			new_shutit.process_args(ShutItInit('build',
 			                                   delivery='docker',
 			                                   base_image=docker_image,
