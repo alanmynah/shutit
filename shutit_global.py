@@ -182,6 +182,7 @@ class ShutItGlobal(object):
 	                   walkthrough_wait=-1,
 	                   nocolor=False,
 	                   loglevel='WARNING'):
+		os.system("echo 'line185 shutit_global.py create_session start'")
 		assert isinstance(session_type, str), shutit_util.print_debug()
 		new_shutit = ShutIt(standalone=True, session_type=session_type)
 		self.shutit_objects.append(new_shutit)

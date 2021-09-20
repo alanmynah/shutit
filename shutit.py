@@ -25,6 +25,7 @@
 
 """ShutIt is a means of building stateless target hosts in a flexible and predictable way.
 """
+import os
 import sys
 import shutit_global
 import shutit_util
@@ -54,11 +55,14 @@ def create_session(docker_image=None,
 	bash    - a bash shell is spawned and
 	vagrant - a Vagrantfile is created and 'vagrant up'ped
 	"""
+	os.system("echo 'first create_session'")
+
 	assert session_type in ('bash','docker','vagrant'), shutit_util.print_debug()
 	shutit_global_object = shutit_global.shutit_global_object
 	if video != -1 and video > 0:
 		walkthrough = True
 	if session_type in ('bash','docker'):
+		os.system("echo 'line65 shutit.py session_type in bash'")
 		return shutit_global_object.create_session(session_type,
 		                                           docker_image=docker_image,
 		                                           rm=docker_rm,
