@@ -517,6 +517,7 @@ class ShutItPexpectSession(object):
 		shutit.log('Resetting default expect to: ' + shutit.expect_prompts[prompt_name], level=loglevel)
 		self.default_expect = shutit.expect_prompts[prompt_name]
 
+		os.system("echo 'line520 shutit_pexpect.py'")
 		# Sometimes stty resets to 0x0 (?), so we must override here.
 		self.send(ShutItSendSpec(self, send=" stty cols 65535", echo=False, check_exit=False, loglevel=loglevel, ignore_background=True))
 		self.send(ShutItSendSpec(self, send=" stty rows 65535", echo=False, check_exit=False, loglevel=loglevel, ignore_background=True))
@@ -525,27 +526,28 @@ class ShutItPexpectSession(object):
 
 		# Get the hostname
 		# Lack of space after > is deliberate to avoid issues with prompt matching.
+		os.system("echo 'line529 shutit_pexpect.py'")
 		hostname = shutit.send_and_get_output(""" if [ $(echo $SHELL) == '/bin/bash' ]; then echo $HOSTNAME; elif [ $(command hostname 2>/dev/null) != '' ]; then hostname -s 2>/dev/null; fi""", echo=False, loglevel=logging.DEBUG)
 		local_prompt_with_hostname = hostname + ':' + local_prompt
 		shutit.expect_prompts[prompt_name] = local_prompt_with_hostname
 		self.default_expect = shutit.expect_prompts[prompt_name]
 		# Set up a shell expect to check whether we're still in a shell later.
 		self.shell_expect = self.default_expect
-
+		os.system("echo 'line536 shutit_pexpect.py'")
 		# Split the local prompt into two parts and separate with quotes to protect against the expect matching the command rather than the output.
 		self.send(ShutItSendSpec(self,
 		                         send=""" PS1='""" + shutit.expect_prompts[prompt_name][:2] + "''" + shutit.expect_prompts[prompt_name][2:] + """'""",
 		                         echo=False,
 		                         loglevel=loglevel,
 		                         ignore_background=True))
-
+		os.system("echo 'line543 shutit_pexpect.py'")
 		# Set up history the way shutit likes it.
 		self.send(ShutItSendSpec(self,
 		                         send=' command export HISTCONTROL=$HISTCONTROL:ignoredups:ignorespace',
 		                         echo=False,
 		                         loglevel=loglevel,
 		                         ignore_background=True))
-
+		os.system("echo 'line550 shutit_pexpect.py'")
 		# Ensure environment is set up OK.
 		_ = self.init_pexpect_session_environment(prefix)
 		return True
