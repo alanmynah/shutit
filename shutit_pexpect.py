@@ -194,7 +194,7 @@ class ShutItPexpectSession(object):
 		"""
 		assert not sendspec.started, shutit_util.print_debug()
 		shutit = self.shutit
-		os.system("echo 'line197 shutit_pexpect.py'")
+		shutit.log('line197 shutit_pexpect.py')
 		shutit.log('Sending in pexpect session (' + str(id(self)) + '): ' + str(sendspec.send), level=logging.DEBUG)
 		if sendspec.expect:
 			shutit.log('Expecting: ' + str(sendspec.expect), level=logging.DEBUG)
@@ -507,7 +507,7 @@ class ShutItPexpectSession(object):
 		if capture_exit_code:
 			send_str = r' SHUTIT_EC=$? && '
 		send_str += """ export PS1_""" + str(prompt_name) + """=$PS1 && PS1='""" + str(local_prompt[:2]) + "''" + str(local_prompt[2:]) + """' && PROMPT_COMMAND=""" + shutit_global.shutit_global_object.prompt_command
-		os.system("echo 'line509 shutit_pexpect.py'")
+		shutit.log('line509 shutit_pexpect.py')
 		self.send(ShutItSendSpec(self,
 		                         send=send_str,
 		                         expect=['\r\n' + shutit.expect_prompts[prompt_name]],
@@ -518,7 +518,7 @@ class ShutItPexpectSession(object):
 		# Set default expect to new.
 		shutit.log('Resetting default expect to: ' + shutit.expect_prompts[prompt_name], level=loglevel)
 		self.default_expect = shutit.expect_prompts[prompt_name]
-		os.system("echo 'line520 shutit_pexpect.py'")
+		shutit.log('line520 shutit_pexpect.py')
 		# Sometimes stty resets to 0x0 (?), so we must override here.
 		self.send(ShutItSendSpec(self, send=" stty cols 65535", echo=False, check_exit=False, loglevel=loglevel, ignore_background=True))
 		self.send(ShutItSendSpec(self, send=" stty rows 65535", echo=False, check_exit=False, loglevel=loglevel, ignore_background=True))
@@ -527,28 +527,28 @@ class ShutItPexpectSession(object):
 
 		# Get the hostname
 		# Lack of space after > is deliberate to avoid issues with prompt matching.
-		os.system("echo 'line529 shutit_pexpect.py'")
+		shutit.log('line529 shutit_pexpect.py')
 		hostname = shutit.send_and_get_output(""" if [ $(echo $SHELL) == '/bin/bash' ]; then echo $HOSTNAME; elif [ $(command hostname 2>/dev/null) != '' ]; then hostname -s 2>/dev/null; fi""", echo=False, loglevel=logging.DEBUG)
 		local_prompt_with_hostname = hostname + ':' + local_prompt
 		shutit.expect_prompts[prompt_name] = local_prompt_with_hostname
 		self.default_expect = shutit.expect_prompts[prompt_name]
 		# Set up a shell expect to check whether we're still in a shell later.
 		self.shell_expect = self.default_expect
-		os.system("echo 'line536 shutit_pexpect.py'")
+		shutit.log('line536 shutit_pexpect.py')
 		# Split the local prompt into two parts and separate with quotes to protect against the expect matching the command rather than the output.
 		self.send(ShutItSendSpec(self,
 		                         send=""" PS1='""" + shutit.expect_prompts[prompt_name][:2] + "''" + shutit.expect_prompts[prompt_name][2:] + """'""",
 		                         echo=False,
 		                         loglevel=loglevel,
 		                         ignore_background=True))
-		os.system("echo 'line543 shutit_pexpect.py'")
+		shutit.log('line543 shutit_pexpect.py')
 		# Set up history the way shutit likes it.
 		self.send(ShutItSendSpec(self,
 		                         send=' command export HISTCONTROL=$HISTCONTROL:ignoredups:ignorespace',
 		                         echo=False,
 		                         loglevel=loglevel,
 		                         ignore_background=True))
-		os.system("echo 'line550 shutit_pexpect.py'")
+		shutit.log('line550 shutit_pexpect.py')
 		# Ensure environment is set up OK.
 		_ = self.init_pexpect_session_environment(prefix)
 		return True
@@ -1584,26 +1584,26 @@ class ShutItPexpectSession(object):
 			self.pexpect_child.read_nonblocking(size=10000,timeout=1)
 		except pexpect.TIMEOUT:
 			pass
-		os.system("echo 'line1586 shutit_pexpect.py'")
+		shutit.log('line1586 shutit_pexpect.py')
 		time.sleep(0.1)
-		os.system("echo 'line1588 shutit_pexpect.py'")
+		shutit.log('line1588 shutit_pexpect.py')
 		self.pexpect_child.sendline()
 		time.sleep(0.5)
-		os.system("echo 'line1591 shutit_pexpect.py'")
+		shutit.log('line1591 shutit_pexpect.py')
 		self.pexpect_child.read_nonblocking(size=1000,timeout=1)
-		os.system("echo 'line1593 shutit_pexpect.py'")
+		shutit.log('line1593 shutit_pexpect.py')
 		time.sleep(0.1)
 		self.pexpect_child.sendline()
-		os.system("echo 'line1596 shutit_pexpect.py'")
+		shutit.log('line1596 shutit_pexpect.py')
 		time.sleep(0.5)
 		a = self.pexpect_child.read_nonblocking(size=1000,timeout=1)
-		os.system("echo 'line1599 shutit_pexpect.py'")
+		shutit.log('line1599 shutit_pexpect.py')
 		time.sleep(0.1)
 		self.pexpect_child.sendline()
-		os.system("echo 'line1602 shutit_pexpect.py'")
+		shutit.log('line1602 shutit_pexpect.py')
 		time.sleep(0.5)
 		b = self.pexpect_child.read_nonblocking(size=1000,timeout=1)
-		os.system("echo 'line1605 shutit_pexpect.py'")
+		shutit.log('line1605 shutit_pexpect.py')
 		ld = self.levenshtein_distance(a,b)
 		if len(a) == 0:
 			return False
@@ -2679,10 +2679,10 @@ class ShutItPexpectSession(object):
 		@rtype:                      int
 		"""
 		shutit = self.shutit
-		os.system("echo 'line2681 shutit_pexpect.py'")
+		shutit.log('line2681 shutit_pexpect.py')
 		shutit.log('In session: ' + self.pexpect_session_id + ', trying to send: ' + str(sendspec.send), level=logging.DEBUG)
 		if self._check_blocked(sendspec):
-			os.system("echo 'line2685 shutit_pexpect.py'")
+			shutit.log('line2685 shutit_pexpect.py')
 			shutit.log('In send for ' + str(sendspec.send) + ', check_blocked called and returned True.', level=logging.DEBUG)
 			# _check_blocked will add to the list of background tasks and handle dupes, so leave there.
 			return -1
@@ -2788,24 +2788,24 @@ class ShutItPexpectSession(object):
 
 		# Log - tho not if secret.
 		if sendspec.send != None:
-			os.system("echo 'line2789 shutit_pexpect.py'")
+			shutit.log('line2789 shutit_pexpect.py')
 			shutit.log('================================================================================', level=logging.DEBUG)
 			send_and_expect_summary_msg = ''
 			if not sendspec.echo and not sendspec.secret:
-				os.system("echo 'line2793 shutit_pexpect.py'")
+				shutit.log('line2793 shutit_pexpect.py')
 				send_and_expect_summary_msg += 'Sending: ' + sendspec.send
 			elif not sendspec.echo and sendspec.secret:
-				os.system("echo 'line2796 shutit_pexpect.py'")
+				shutit.log('line2796 shutit_pexpect.py')
 				send_and_expect_summary_msg += 'Sending: ' + sendspec.send
 			if not sendspec.secret:
-				os.system("echo 'line2799 shutit_pexpect.py'")
+				shutit.log('line2799 shutit_pexpect.py')
 				send_and_expect_summary_msg += 'Sending>>>' + sendspec.send + '<<<'
 			else:
-				os.system("echo 'line2802 shutit_pexpect.py'")
+				shutit.log('line2802 shutit_pexpect.py')
 				send_and_expect_summary_msg += 'Sending>>>[SECRET]<<<'
 			send_and_expect_summary_msg += ', expecting>>>' + str(sendspec.expect) + '<<<'
 			shutit.log(send_and_expect_summary_msg, level=logging.DEBUG)
-		os.system("echo 'line2806 shutit_pexpect.py'")
+		shutit.log('line2806 shutit_pexpect.py')
 		while sendspec.retry > 0:
 			if sendspec.escape:
 				escaped_str = "eval $'"
