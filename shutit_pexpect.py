@@ -1583,18 +1583,26 @@ class ShutItPexpectSession(object):
 			self.pexpect_child.read_nonblocking(size=10000,timeout=1)
 		except pexpect.TIMEOUT:
 			pass
+		os.system("echo 'line1586 shutit_pexpect.py'")
 		time.sleep(0.1)
+		os.system("echo 'line1588 shutit_pexpect.py'")
 		self.pexpect_child.sendline()
 		time.sleep(0.5)
+		os.system("echo 'line1591 shutit_pexpect.py'")
 		self.pexpect_child.read_nonblocking(size=1000,timeout=1)
+		os.system("echo 'line1593 shutit_pexpect.py'")
 		time.sleep(0.1)
 		self.pexpect_child.sendline()
+		os.system("echo 'line1596 shutit_pexpect.py'")
 		time.sleep(0.5)
 		a = self.pexpect_child.read_nonblocking(size=1000,timeout=1)
+		os.system("echo 'line1599 shutit_pexpect.py'")
 		time.sleep(0.1)
 		self.pexpect_child.sendline()
+		os.system("echo 'line1602 shutit_pexpect.py'")
 		time.sleep(0.5)
 		b = self.pexpect_child.read_nonblocking(size=1000,timeout=1)
+		os.system("echo 'line1605 shutit_pexpect.py'")
 		ld = self.levenshtein_distance(a,b)
 		if len(a) == 0:
 			return False
