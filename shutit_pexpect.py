@@ -2679,8 +2679,10 @@ class ShutItPexpectSession(object):
 		@rtype:                      int
 		"""
 		shutit = self.shutit
+		os.system("echo 'line2681 shutit_pexpect.py'")
 		shutit.log('In session: ' + self.pexpect_session_id + ', trying to send: ' + str(sendspec.send), level=logging.DEBUG)
 		if self._check_blocked(sendspec):
+			os.system("echo 'line2685 shutit_pexpect.py'")
 			shutit.log('In send for ' + str(sendspec.send) + ', check_blocked called and returned True.', level=logging.DEBUG)
 			# _check_blocked will add to the list of background tasks and handle dupes, so leave there.
 			return -1
@@ -2786,19 +2788,24 @@ class ShutItPexpectSession(object):
 
 		# Log - tho not if secret.
 		if sendspec.send != None:
+			os.system("echo 'line2789 shutit_pexpect.py'")
 			shutit.log('================================================================================', level=logging.DEBUG)
 			send_and_expect_summary_msg = ''
 			if not sendspec.echo and not sendspec.secret:
+				os.system("echo 'line2793 shutit_pexpect.py'")
 				send_and_expect_summary_msg += 'Sending: ' + sendspec.send
 			elif not sendspec.echo and sendspec.secret:
+				os.system("echo 'line2796 shutit_pexpect.py'")
 				send_and_expect_summary_msg += 'Sending: ' + sendspec.send
 			if not sendspec.secret:
+				os.system("echo 'line2799 shutit_pexpect.py'")
 				send_and_expect_summary_msg += 'Sending>>>' + sendspec.send + '<<<'
 			else:
+				os.system("echo 'line2802 shutit_pexpect.py'")
 				send_and_expect_summary_msg += 'Sending>>>[SECRET]<<<'
 			send_and_expect_summary_msg += ', expecting>>>' + str(sendspec.expect) + '<<<'
 			shutit.log(send_and_expect_summary_msg, level=logging.DEBUG)
-
+		os.system("echo 'line2806 shutit_pexpect.py'")
 		while sendspec.retry > 0:
 			if sendspec.escape:
 				escaped_str = "eval $'"
