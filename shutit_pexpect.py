@@ -194,6 +194,7 @@ class ShutItPexpectSession(object):
 		"""
 		assert not sendspec.started, shutit_util.print_debug()
 		shutit = self.shutit
+		os.system("echo 'line197 shutit_pexpect.py'")
 		shutit.log('Sending in pexpect session (' + str(id(self)) + '): ' + str(sendspec.send), level=logging.DEBUG)
 		if sendspec.expect:
 			shutit.log('Expecting: ' + str(sendspec.expect), level=logging.DEBUG)
@@ -506,6 +507,7 @@ class ShutItPexpectSession(object):
 		if capture_exit_code:
 			send_str = r' SHUTIT_EC=$? && '
 		send_str += """ export PS1_""" + str(prompt_name) + """=$PS1 && PS1='""" + str(local_prompt[:2]) + "''" + str(local_prompt[2:]) + """' && PROMPT_COMMAND=""" + shutit_global.shutit_global_object.prompt_command
+		os.system("echo 'line509 shutit_pexpect.py'")
 		self.send(ShutItSendSpec(self,
 		                         send=send_str,
 		                         expect=['\r\n' + shutit.expect_prompts[prompt_name]],
@@ -516,7 +518,6 @@ class ShutItPexpectSession(object):
 		# Set default expect to new.
 		shutit.log('Resetting default expect to: ' + shutit.expect_prompts[prompt_name], level=loglevel)
 		self.default_expect = shutit.expect_prompts[prompt_name]
-
 		os.system("echo 'line520 shutit_pexpect.py'")
 		# Sometimes stty resets to 0x0 (?), so we must override here.
 		self.send(ShutItSendSpec(self, send=" stty cols 65535", echo=False, check_exit=False, loglevel=loglevel, ignore_background=True))

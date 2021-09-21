@@ -1965,10 +1965,15 @@ class ShutIt(object):
 		@type retry:     integer
 		@type strip:     boolean
 		"""
+		os.system("echo 'line1968 shutit_class.py'")
 		shutit_global.shutit_global_object.yield_to_draw()
+		os.system("echo 'line1970 shutit_class.py'")
 		shutit_pexpect_child = shutit_pexpect_child or self.get_current_shutit_pexpect_session().pexpect_child
+		os.system("echo 'line1972 shutit_class.py'")
 		shutit_pexpect_session = self.get_shutit_pexpect_session_from_child(shutit_pexpect_child)
+		os.system("echo 'line1974 shutit_class.py'")
 		ignore_background = not wait
+		os.system("echo 'line1976 shutit_class.py'")
 		return shutit_pexpect_session.send_and_get_output(send,
 		                                                  timeout=timeout,
 		                                                  retry=retry,
